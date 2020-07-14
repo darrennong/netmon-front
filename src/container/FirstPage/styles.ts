@@ -170,25 +170,6 @@ export const TabRow = styled.div`
   border-bottom: 1px solid #e2e3ed;
 `;
 
-interface TabProps{
-  selected:Boolean;
-}
-export const TabSpan = styled.div<TabProps>`
-  width: 80px;
-  text-align: center;
-  margin-bottom: 0px 10px -6px 10px;
-  cursor: pointer;
-  font-size: 14px;
-  font-family: Source Han Sans CN;
-  font-weight: 400;
-  color: rgba(0, 0, 0, 1);
-  opacity: 0.85;
-  border-bottom: 1px solid ${props => props.selected?`rgba(64, 169, 255, 1)`:`rgba(64, 169, 255, 0)`};
-  &:hover {
-    color: rgba(64, 169, 255, 1);
-    border-bottom: 1px solid rgba(64, 169, 255, 1);
-  }
-`;
 export const SeriTxt = styled.span`
   padding-left: 10px;
   padding-right: 10px;

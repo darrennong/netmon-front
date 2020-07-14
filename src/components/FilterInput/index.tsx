@@ -13,11 +13,13 @@ interface Props{
 };
 
 export default class FilterInput extends PureComponent<Props> {
-  
-  state = { isOnFocus: false };
+  constructor(props: Readonly<Props>){
+    super(props);
+    this.state = { isOnFocus: false };
+  }
 
-  onChange(e: { target: { value: any; }; }){this.props.setFilterInputValue(e.target.value);}
-  onKeyUp(e:any){
+  onChange = (e: { target: { value: any; }; }) => {this.props.setFilterInputValue(e.target.value);}
+  onKeyUp = (e:any) => {
     if (e.which === 13) {
       this.props.onSearch(e.target.value);
     }
@@ -25,13 +27,13 @@ export default class FilterInput extends PureComponent<Props> {
 
   clearFilterInput = () => this.props.setFilterInputValue('');
 
-  isInputOnFocusToggle(){
-    const { isOnFocus } = this.state;
+  isInputOnFocusToggle = ()=>{
+    const { isOnFocus }:any = this.state;
     this.setState({ isOnFocus: !isOnFocus });
   }
 
   render() {
-    const { isOnFocus } = this.state;
+    const { isOnFocus }:any = this.state;
     const { t, filterInputValue } = this.props;
 
     return (

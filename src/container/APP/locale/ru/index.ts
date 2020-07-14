@@ -1,4 +1,3 @@
-import { i18n } from 'i18next';
 export default Object.freeze({
   translations: {
     // <NavigationMenu />
@@ -103,7 +102,7 @@ export default Object.freeze({
         price: '价格(USD)',
         maxSupply: '最大供应量',
         liquidity: '流通量',
-        liquidityValue: '流通市值(USD)',
+        liquidityValue: '流通市值',
       },
       // <Api />
       i18nApi: {
@@ -197,7 +196,6 @@ export default Object.freeze({
       account: '账户',
       token: '代币',
       searchTips: '搜索交易、区块、账户、合约',
-      searchError: `没有搜索结果`,
     },
     // <Top50Trans />
     i18Top50Section: {
@@ -308,13 +306,7 @@ export default Object.freeze({
       hisActType: "操作类型",
       hisData: "数据",
       tokenTitle:"持有代币",
-      tokenSubTitle: "共 $1 种≈$2 USD",
-      expand: "展开",
-      collapse: "收起",
-      statReady: "备选",
-      headProducer: "出块中",
-      nextProducer: "准备出块",
-      inThisRound: "已入选",
+      tokenSubTitle: "共 $1 种≈$2 USD"
     },
     i18nBlockSection:{
       blockNum: "区块编号",
@@ -328,9 +320,6 @@ export default Object.freeze({
       noTrans: "该区块没有交易信息",
       btnPrev: "上一个块",
       btnNext: "下一个块",
-      stateIrrever: "不可逆",
-      stateSubmited: "已执行",
-      stateWating:"待确认",
     },
     i18nTxinfo:{
       txHash:"交易Hash",
@@ -351,14 +340,9 @@ export default Object.freeze({
       subTitle: "总资产前100",
       ranks: "排名",
       name: "账户名",
-      totalValue: "总资产(POC)",
-      marketValue: "市值(USD)",
+      totalValue: "总资产",
+      marketValue: "市值",
       percentage:"占比",
-    },
-    i18nNotFound:{
-      account:'您要找的账户并不存在',
-      trans: "您要找的交易并不存在",
-      block: "您要找的区块并不存在",
     },
     // <Footer />
     footer: {

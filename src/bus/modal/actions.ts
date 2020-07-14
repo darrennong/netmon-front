@@ -1,6 +1,8 @@
 // Instruments
 import types from './types';
 import { HISTORY_ITEMS_PER_PAGE, TOP_RICH_ACCOUNT_PER_PAGE, PotatoRpc, API_URL, } from '../../constants';
+import { toast } from 'react-toastify';
+import { history } from '../../init/middleware';
 
 export const modalActions = Object.freeze({
   fetchAccountInfo: (producerName: any) => async (dispatch: (arg0: { type: string; payload?: any; }) => void) => {
@@ -9,6 +11,8 @@ export const modalActions = Object.freeze({
       const response = await fetch(`${API_URL}/api/v1/accounts/${producerName}`);
       const data = await response.json();
       if (!data.account_name) {
+        toast('没有搜索到该账户');
+        history.goBack();
         return dispatch({ type: types.FETCHING_ACCOUNT_INFO_FAILURE });
       }
       return dispatch({
@@ -16,6 +20,8 @@ export const modalActions = Object.freeze({
         payload: data,
       });
     } catch (e) {
+      toast('没有搜索到该账户');
+      history.goBack();
       return dispatch({ type: types.FETCHING_ACCOUNT_INFO_FAILURE });
     }
   },
@@ -111,7 +117,10 @@ export const modalActions = Object.freeze({
     try {
       const response = await fetch(`${API_URL}/api/v1/transactions/${txId}`);
       const data = await response.json();
+      console.log(data);
       if (!data.txid) {
+        toast('没有搜索结果');
+        history.goBack();
         return dispatch({
           type: types.FETCHING_TX_INFO_FAILURE,
         });
@@ -121,6 +130,9 @@ export const modalActions = Object.freeze({
         payload: data,
       });
     } catch (e) {
+      console.log(e.stack);
+      toast('没有搜索结果');
+      history.goBack();
       return dispatch({
         type: types.FETCHING_TX_INFO_FAILURE,
       });
@@ -192,7 +204,7 @@ export const modalActions = Object.freeze({
     type: types.RESET_BP_JSON,
   }),
 
-  getInfo: () => async (dispatch: (arg0: { type: string; payload?: import("pcjs/dist/pcjs-rpc-interfaces").GetInfoResult; }) => void) => {
+  getInfo: () => async (dispatch: (arg0: { type: string; payload?: import("eosjs/dist/eosjs-rpc-interfaces").GetInfoResult; }) => void) => {
     dispatch({ type: types.POTATO_API_PENDING });
 
     try {
@@ -208,7 +220,7 @@ export const modalActions = Object.freeze({
     }
   },
 
-  getBlock: (data: { getBlock: any; }) => async (dispatch: (arg0: { type: string; payload?: import("pcjs/dist/pcjs-rpc-interfaces").GetBlockResult; }) => void) => {
+  getBlock: (data: { getBlock: any; }) => async (dispatch: (arg0: { type: string; payload?: import("eosjs/dist/eosjs-rpc-interfaces").GetBlockResult; }) => void) => {
     dispatch({ type: types.POTATO_API_PENDING });
 
     try {
@@ -264,7 +276,7 @@ export const modalActions = Object.freeze({
     }
   },
 
-  getAbi: (account_name: string) => async (dispatch: (arg0: { type: string; payload?: import("pcjs/dist/pcjs-rpc-interfaces").GetAbiResult; }) => void) => {
+  getAbi: (account_name: string) => async (dispatch: (arg0: { type: string; payload?: import("eosjs/dist/eosjs-rpc-interfaces").GetAbiResult; }) => void) => {
     dispatch({ type: types.POTATO_API_PENDING });
 
     try {
@@ -281,7 +293,7 @@ export const modalActions = Object.freeze({
     }
   },
 
-  getRawCodeAndAbi: (data: string) => async (dispatch: (arg0: { type: string; payload?: { abi: import("pcjs/dist/pcjs-rpc-interfaces").GetAbiResult; code: import("pcjs/dist/pcjs-rpc-interfaces").GetCodeResult; }; }) => void) => {
+  getRawCodeAndAbi: (data: string) => async (dispatch: (arg0: { type: string; payload?: { abi: import("eosjs/dist/eosjs-rpc-interfaces").GetAbiResult; code: import("eosjs/dist/eosjs-rpc-interfaces").GetCodeResult; }; }) => void) => {
     dispatch({ type: types.POTATO_API_PENDING });
 
     try {

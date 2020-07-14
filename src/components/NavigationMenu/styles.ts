@@ -63,6 +63,7 @@ export const NavTab = styled.li<SelectAble>`
   &:hover {
     border-bottom: 5px solid #ffffff;
   }
+  cursor: pointer;
 `;
 
 export const ALabel = styled.a`

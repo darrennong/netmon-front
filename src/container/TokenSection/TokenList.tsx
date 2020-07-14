@@ -9,19 +9,8 @@ import { uiActions } from "../../bus/ui/actions";
 import { selectLastBlockStats } from "../../bus/generalStats/selectors";
 import { connect } from "react-redux";
 import { selectTokens } from "../../bus/modal/selectors";
-import { formatNumber } from "../../utils/fromatNumber";
-interface Token {
-    contact: string;
-    createdAccounts: Array<string>;
-    date: Date;
-    maxSupply: number;
-    name: string;
-    numHolders: number;
-    supply: number;
-    symbol: string;
-    
-}
-interface Props {
+import { Token } from ".";
+interface Props extends WithTranslation{
     tokens: Array<Token>;
     lastBlockStats: any;
     actions: {
@@ -46,14 +35,14 @@ const mapDispatchToProps = (dispach: any) => ({
     ),
 });
 
-class TokenList extends PureComponent<WithTranslation, Props>{
-    constructor(props:any){
+class TokenList extends PureComponent<Props>{
+    constructor(props: Readonly<Props>){
         super(props);
         props.actions.fetchTokens();
     }
     render() {
         const { t, tokens, lastBlockStats, actions:{toggleModal}}: any = this.props;
-        if(lastBlockStats.price===undefined){
+        if(lastBlockStats.price===undefined ){
             return null;
         }
         return (
@@ -74,11 +63,11 @@ class TokenList extends PureComponent<WithTranslation, Props>{
                             const price = token.name==='eosio.token'?lastBlockStats.price.price:0.1;
                             return (<RowBox key={i}>
                                 <FieldSpan w={50} align="center">{i + 1}</FieldSpan>
-                                <TableLink w={100} align="left" onClick={()=>toggleModal("account",token.name)}>{token.name}</TableLink>
+                                <TableLink w={100} align="left" onClick={()=>toggleModal('tokenInfo',token.name)}>{token.name}</TableLink>
                                 <FieldSpan w={80} align="right">{token.numHolders}</FieldSpan>
                                 <FieldSpan w={80} align="right">{price}</FieldSpan>
-                                <FieldSpan w={150} align="right">{formatNumber(token.supply)} {token.symbol}</FieldSpan>
-                                <FieldSpan w={150} align="right">${formatNumber((token.supply*price).toFixed(2))}</FieldSpan>
+                                <FieldSpan w={150} align="right">{token.supply.toLocaleString('zh', {minimumFractionDigits:4, maximumFractionDigits: 4, useGrouping:true })} {token.symbol}</FieldSpan>
+                                <FieldSpan w={150} align="right">{(token.supply*price).toLocaleString('zh', {minimumFractionDigits:2, maximumFractionDigits: 2, useGrouping:true })}</FieldSpan>
                             </RowBox>)
                         })
                     }

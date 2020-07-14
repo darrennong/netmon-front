@@ -1,4 +1,9 @@
 import styled from 'styled-components';
+
+export const PERCENT = { style: 'percent', minimumFractionDigits: 2, maximumFractionDigits: 2, useGrouping: true };
+export const VALUE_STYLE = { minimumFractionDigits: 2, maximumFractionDigits: 2, useGrouping: true };
+export const POC_STYLE = { minimumFractionDigits: 4, maximumFractionDigits: 4, useGrouping: true };
+export const INT_STYLE = {maximumFractionDigits: 0, useGrouping: true};
     // box-sizing: border-box;
 export const Warpper = styled.div`
     display: flex;
@@ -150,4 +155,26 @@ export const MainValueField = styled.span`
   font-weight:500;
   color:rgba(27,31,51,1);
   opacity:0.95;
+`;
+interface TabProps{
+    selected?: Boolean;
+    w?: number;
+  }
+export const TabSpan = styled.div<TabProps>`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: ${props => props.w||80}px;
+    height: 100%;
+    cursor: pointer;
+    font-size: 16px;
+    font-family: Source Han Sans CN;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 1);
+    opacity:0.65;
+    border-bottom: 1px solid ${props => props.selected?`rgba(64, 169, 255, 1)`:`rgba(64, 169, 255, 0)`};
+    &:hover {
+        color: rgba(64, 169, 255, 1);
+        border-bottom: 1px solid rgba(64, 169, 255, 1);
+    }
 `;

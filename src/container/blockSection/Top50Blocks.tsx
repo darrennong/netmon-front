@@ -63,7 +63,7 @@ class Top50Blocks extends PureComponent<WithTranslation, Props>{
                                 <TableLink w={150} align="left" onClick={()=>toggleModal('block',block.blockNumber)}>{block.blockNumber}</TableLink>
                                 <FieldSpan w={100} align="left">{block.blockTransCount}</FieldSpan>
                                 <FieldSpan w={100} align="left">{block.blockActionCount}</FieldSpan>
-                                <TableLink w={150} align="left">{block.producer}</TableLink>
+                                <TableLink w={150} align="left" onClick={()=>toggleModal('account',block.producer)}>{block.producer}</TableLink>
                                 <FieldSpan w={150} align="left">{convertUtcToLocal(block.createAt)}</FieldSpan>
                             </RowBox>)
                         })

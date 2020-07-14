@@ -8,9 +8,10 @@ interface Props{
   pageTo: Function;
 }
 export default class PageNav extends PureComponent<Props>{
-  constructor(props:any){
+  constructor(props: Readonly<Props>){
     super(props);
-    this.state = { width: 600 };
+    const npg = props.totalPages.toString().length;
+    this.state = { width: 600,npg, };
   }
   updateWidth(){
     const wrpb = document.getElementById('wrapper');
@@ -26,13 +27,11 @@ export default class PageNav extends PureComponent<Props>{
 
   componentDidUpdate() {
     this.updateWidth();
+    const npg = this.props.totalPages.toString().length
+    if(npg!==(this.state as any).npg){
+      this.setState({npg});
+    }
   }
-//  UNSAFE_componentWillReceiveProps() {
-//     const {page,totalPages}:any = this.props;
-//     if (page > totalPages) {
-//       this.pageTo(1);
-//     }
-//   }
 
   pageTo(n: any){
     const { pageTo }:any = this.props;
@@ -145,9 +144,7 @@ export default class PageNav extends PureComponent<Props>{
   };
 
   render() {
-    const {width}:any = this.state;
-    const { totalPages }:any = this.props;
-    const npg = totalPages.toFixed(0).length;
+    const {width,npg}:any = this.state;
     return (
       <Wrapper id="wrapper" w={width}>
         {this.getPrev()}
@@ -158,7 +155,7 @@ export default class PageNav extends PureComponent<Props>{
         {this.getLast()}
         {this.getNext()}
         <Text>跳至</Text>
-        <Input onChange={(event)=>this.onPageInputChange(event)} onKeyUp={(event)=>this.onKeyUp(event)} w={npg} />
+        <Input w={npg} onChange={(event)=>this.onPageInputChange(event)} onKeyUp={(event)=>this.onKeyUp(event)}/>
         <Text id="wrappend">页</Text>
       </Wrapper>
     );

@@ -66,8 +66,7 @@ export const Text = styled.span`
 `;
 
 export const Input = styled.input<Widen>`
-  width: ${ props => `${props.w * 14}px`};
-  min-width: 24px;
+  width: ${ props => `${props.w * 9}px`};
   height: 16px;
   text-align: center;
 `;

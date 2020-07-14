@@ -1,3 +1,4 @@
+import { POC_STYLE } from './../container/styles';
 export const castToInt = (x: number) => (x ? x / 1 : 0);
 
 export const formatNumber = (x: any) => {
@@ -43,3 +44,11 @@ export const formatBytes = (b: number) => {
   b /= 1024;
   return `${b.toFixed(1)} GB`;
 };
+
+export const formatPOC = (poc?:string|number)=>{
+  if(!poc) poc = 0;
+  if( typeof poc === 'number')
+    return poc.toLocaleString('zh',POC_STYLE)+` POC`;
+  const [v,u] = poc.split(' ');
+  return u?parseFloat(v).toLocaleString('zh',POC_STYLE)+' '+u:parseFloat(v).toLocaleString('zh',POC_STYLE);
+}

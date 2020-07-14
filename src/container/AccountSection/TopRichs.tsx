@@ -58,7 +58,7 @@ class TopRichs extends PureComponent<Props>{
         let sum = 1;
         for (const tk of tokens) {
           if (tk.name === 'eosio.token') {
-            sum = tk.supply/100;
+            sum = tk.supply;
             break;
           }
         }
@@ -79,9 +79,9 @@ class TopRichs extends PureComponent<Props>{
                             return (<RowBox key={i}>
                                 <FieldSpan w={50} align="center">{i+1}</FieldSpan>
                                 <TableLink w={100} align="left" onClick={()=>toggleModal('account',account.name)}>{account.name}</TableLink>
-                                <FieldSpan w={150} align="right">{account.balances.POC}POC</FieldSpan>
-                                <FieldSpan w={150} align="right">{account.balances.POC*price}</FieldSpan>
-                                <FieldSpan w={80} align="right" padding-right="18px">{(account.balances.POC/sum).toFixed(2)}%</FieldSpan>
+                                <FieldSpan w={150} align="right">{account.balances.POC.toLocaleString('zh', { minimumFractionDigits:4,maximumFractionDigits: 4, useGrouping:true })}</FieldSpan>
+                                <FieldSpan w={150} align="right">{(account.balances.POC*price).toLocaleString('zh', {minimumFractionDigits:2, maximumFractionDigits: 2, useGrouping:true })}</FieldSpan>
+                                <FieldSpan w={80} align="right" padding-right="18px">{(account.balances.POC/sum).toLocaleString('zh', {style: 'percent',minimumFractionDigits:2, maximumFractionDigits: 2, useGrouping:true })}</FieldSpan>
                             </RowBox>)
                         })
                     }

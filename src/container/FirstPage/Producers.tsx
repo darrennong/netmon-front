@@ -7,8 +7,6 @@ import {
     RowData,
     YellowSpan,
     GreenSpan,
-    TabRow,
-    TabSpan,
     SeriTxt,
 } from './styles';
 
@@ -16,7 +14,7 @@ import {
 
 import icon from './icons/producers.png';
 import PageNav from '../../components/PageNav';
-import { HeaderBox, FieldSpan, TableLink, Warpper } from '../styles';
+import { HeaderBox, FieldSpan, TableLink, Warpper, TabSpan, SectionBox } from '../styles';
 
 export interface Producer {
     name: string;
@@ -57,7 +55,7 @@ export default class Producers extends PureComponent<Props> {
     };
 
     showCurrentRound(showCurrentRound:boolean){
-        this.setState({showCurrentRound});
+        this.setState({showCurrentRound,page:1});
     }
 
     render() {
@@ -75,6 +73,7 @@ export default class Producers extends PureComponent<Props> {
         const items = [];
         for (; i < end; i++) {
             const producer = producers[i];
+            if(!producer) break;
             items.push(
                 <RowData key={i}>
                     <FieldSpan w={50} align="center"><SeriTxt>{i + 1}</SeriTxt></FieldSpan>
@@ -83,8 +82,8 @@ export default class Producers extends PureComponent<Props> {
                     <FieldSpan w={80} align="left">{t('i18nFirstSection.i18nProducers.localNet')}</FieldSpan>
                     <FieldSpan w={80} align="right">{producer.votesPercentage.toFixed(2)}%</FieldSpan>
                     <FieldSpan w={80} align="right">{producer.chipcounter_count}</FieldSpan>
-                    <FieldSpan w={150} align="right">{producer.totalVotes}</FieldSpan>
-                    <FieldSpan w={100} align="right">{producer.rewards_per_day.toFixed(4)}</FieldSpan>
+                    <FieldSpan w={150} align="right">{producer.totalVotes.toLocaleString('zh', { useGrouping:true })}</FieldSpan>
+                    <FieldSpan w={100} align="right">{producer.rewards_per_day.toLocaleString('zh', { minimumFractionDigits:4,maximumFractionDigits: 4, useGrouping:true })}</FieldSpan>
                 </RowData>
             );
         }
@@ -95,10 +94,10 @@ export default class Producers extends PureComponent<Props> {
                   生产节点
                   {totalProducer}个
               </ProduceTitle>
-              <TabRow>
-                  <TabSpan selected={showCurrentRound} onClick={()=>this.showCurrentRound(true)}>本轮节点</TabSpan>
-                  <TabSpan selected={!showCurrentRound} onClick={()=>this.showCurrentRound(false)}>全部节点</TabSpan>
-              </TabRow>
+              <SectionBox ul={true} margin="10px 24px 10px 24px">
+                  <TabSpan selected={showCurrentRound} onClick={()=>this.showCurrentRound(true)}>{t('i18nFirstSection.i18nProducers.thisChips')}</TabSpan>
+                  <TabSpan selected={!showCurrentRound} onClick={()=>this.showCurrentRound(false)}>{t('i18nFirstSection.i18nProducers.allNodes')}</TabSpan>
+              </SectionBox>
                 <HeaderBox>
                     <FieldSpan w={50} align="center">{t('i18nFirstSection.i18nProducers.sn')}</FieldSpan>
                     <FieldSpan w={100} align="left">{t('i18nFirstSection.i18nProducers.name')}</FieldSpan>

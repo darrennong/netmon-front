@@ -37,6 +37,7 @@ import {
 // import { Intumentary } from '../SecondSection/styles';
 
 import logourl from '../images/logo.png';
+import { toast } from 'react-toastify';
 interface Actions{
   setFilterInputValue: Function;
   toggleModal: Function;
@@ -96,44 +97,28 @@ class NavigationMenu extends PureComponent<Props> {
     console.log(error, errorInfo);
   }
 
-  componentDidUpdate() {
-    const {
-      filterInputValue,
-      transactionInfo,
-      accountInfo,
-      searchSucessState,
-      actions: { toggleModal},
-    }:any = this.props;
-    const keyword = filterInputValue.trim();
-    if (searchSucessState === 'FETCHING_ACCOUNT_INFO_SUCCESS' && keyword === accountInfo.account_name) {
-      return toggleModal('account', keyword);
-    } else if (searchSucessState === 'FETCHING_TX_INFO_SUCCESS' && keyword === transactionInfo.txid) {
-      return toggleModal('trans', keyword);
-    }
-  }
-
   onSearch = (filterInputValue: string) => {
     const {
-      lastBlockStats,
-      actions: { toggleModal, fetchBlockInfo, fetchTransInfo, fetchAccountInfo },
+      lastBlockStats,t,
+      actions: { toggleModal },
     } = this.props;
     const keyword = filterInputValue.trim();
-    const {lastSearch}:any = this.state;
-    if (keyword && lastSearch !== keyword) {
+    // const {lastSearch}:any = this.state;
+    // if (keyword && lastSearch !== keyword) {
       if (keyword.match(/^[0-9]*$/)) {
         const id = parseInt(keyword, 10);
-        console.log('id:', id, 'last block', lastBlockStats.head_block_num);
         if (id < lastBlockStats.head_block_num) {
-          fetchBlockInfo(id);
-          toggleModal('block', id);
+          toggleModal('block',id);
+        }else{
+          toast(t('i18nNavigationMenu.searchError'));
         }
       } else if (keyword.match(/^[A-Fa-f0-9]{62,64}/)) {
-        fetchTransInfo(keyword);
+        toggleModal('trans',keyword);
       } else if (keyword.match(/^[a-z.0-9]{2,42}/)) {
-        fetchAccountInfo(keyword);
+        toggleModal('account',keyword);
       }
-      this.setState({ lastSearch: keyword } as any);
-    }
+      // this.setState({ lastSearch: keyword } as any);
+    // }
   };
 
   toggleModalHandler = (modalName: any, data: any) => () => {
@@ -207,7 +192,7 @@ class NavigationMenu extends PureComponent<Props> {
               English
             </option>
             <option id="opt3" value="zh-hk">
-              中文(正體)
+              中文(繁體)
             </option>
           </LangSelector>
           <LangContainer>

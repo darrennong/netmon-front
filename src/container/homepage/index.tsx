@@ -2,18 +2,21 @@
 // Core
 import React, { PureComponent, Fragment, } from 'react';
 import { MainContainer, ContentArea } from './styles';
-
 import { Switch, Route, Router } from 'react-router-dom';
 import { history } from '../../init/middleware';
 import NavigationMenu from '../../components/NavigationMenu';
 import Footer from '../../components/Footer';
 import FirstPage from '../FirstPage';
-import Top50Blocks from '../blockSection/Top50Blocks';
-import Top50Transactions from '../transSection/Top50Transactions';
+import Top50Blocks from '../BlockSection/Top50Blocks';
+import Top50Transactions from '../TransSection/Top50Transactions';
 import TopRichs from '../AccountSection/TopRichs';
 import TokenList from '../TokenSection/TokenList';
-import BlockSection from '../blockSection/BlockSection';
+import BlockSection from '../BlockSection/BlockSection';
 import AccountSection from '../AccountSection/AccountSection';
+import ContractHistory from '../AccountSection/ContractHistory';
+import TransactionInfo from '../TransSection/TransactionInfo';
+import TokenInfo from '../TokenSection/TokenInfo';
+import NotFound from '../NotFound';
 // Components
 
 export default class HomePage extends PureComponent {
@@ -32,9 +35,12 @@ export default class HomePage extends PureComponent {
                                 <Route path="/tokens/" component={TokenList} />
                                 <Route path="/account/:id" component={AccountSection} />
                                 <Route path="/block/:id" component={BlockSection} />
-                                {/* <Route path="/trans/:id" component={TransSection} />
-                                <Route path="/tokenInfo/:id" component={TokenInfo} /> */}
-                                <Route component={FirstPage} />
+                                <Route path="/contractAbi/:id" component={ContractHistory}/>
+                                <Route path="/contractHistory/:id" component={ContractHistory}/>
+                                <Route path="/contractHistory/:id/:action/:page" component={ContractHistory}/>
+                                <Route path="/trans/:id" component={TransactionInfo} />
+                                <Route path="/tokenInfo/:id" component={TokenInfo} />
+                                <Route component={NotFound} />
                             </Switch>
                         </Router>
                     </ContentArea>

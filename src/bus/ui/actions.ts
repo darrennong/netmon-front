@@ -30,9 +30,12 @@ const toggleModal = (type: any, data: { txid: any; }) => {
       default:
         break;
     }
-    scrollTo(0, 0);
     const loc = id ? `/${type}/${id}` : `/${type}`;
     const hisloc = history.location.pathname + history.location.hash;
+    if(loc.split('#')[0]!==history.location.pathname)
+    {
+      scrollTo(0, 0);
+    }
     if (hisloc !== loc) {
       history.push(loc);
     }

@@ -12,6 +12,8 @@ import { uiActions } from "../../bus/ui/actions";
 import { SlideBtn } from "./styles";
 import { Arrow } from "../../components/svg/arrow";
 import { convertUtcToLocal } from "../../utils/dateUtils";
+import { formatDuring, formatBytes } from "../../utils/fromatNumber";
+import BlockState from "../../components/BlockState";
 interface Transaction {
   txid: string;
   description: string;
@@ -64,7 +66,7 @@ class BlockSection extends PureComponent<Props>{
   }
   componentDidUpdate() {
     const { match, actions: { fetchBlockInfo } } = this.props;
-    const blockId = match.params.id;
+    const blockId = parseInt(match.params.id);
     if ((this.state as any).blockId !== blockId) {
       fetchBlockInfo(blockId);
       this.setState({ blockId } as any);
@@ -73,28 +75,27 @@ class BlockSection extends PureComponent<Props>{
   stepTo(step: number) {
     const { blockId }: any = this.state;
     const { lastStats, actions: { toggleModal } } = this.props;
-    let id = parseInt(blockId) + step;
+    let id = blockId + step;
     if (id < 1) { id = 1 } else if (id > lastStats.head_block_num) { id = lastStats.head_block_num };
     toggleModal('block', id);
   }
   render() {
     const { t, blockData, actions: { toggleModal } } = this.props;
     const { blockId }: any = this.state;
-    console.log(blockData);
     return (
       <Fragment>
         <Warpper>
           <SectionBox ul={true} margin="10px 24px 0 24px">
             <KeyLable>{t('i18nBlockSection.blockNum')}</KeyLable>
             <MainValueField>{blockId}</MainValueField>
-            <SlideBtn onClick={() => this.stepTo(-1)}><Arrow><path d="M0,5l13,0M6,0l-6,5M0,5l6,5"></path></Arrow>上一个块</SlideBtn>
-            <SlideBtn onClick={() => this.stepTo(1)}>下一个块<Arrow><path d="M0,5l13,0M7,0l6,5M13,5l-6,5"></path></Arrow></SlideBtn>
+            <SlideBtn onClick={() => this.stepTo(-1)}><Arrow><path d="M0,5l13,0M6,0l-6,5M0,5l6,5"></path></Arrow>{t('i18nBlockSection.btnPrev')}</SlideBtn>
+            <SlideBtn onClick={() => this.stepTo(1)}>{t('i18nBlockSection.btnNext')}<Arrow><path d="M0,5l13,0M7,0l6,5M13,5l-6,5"></path></Arrow></SlideBtn>
           </SectionBox>
           <SectionBox ul={true} rows={3} margin="0 24px">
             <HalfBox>
               <SectionRow>
                 <KeyLable>{t('i18nBlockSection.status')}</KeyLable>
-                <ValueField>{blockId}</ValueField>
+                <ValueField><BlockState blockNum={blockId}></BlockState></ValueField>
               </SectionRow>
               <SectionRow>
                 <KeyLable>{t('i18nBlockSection.blockDate')}</KeyLable>
@@ -140,8 +141,8 @@ class BlockSection extends PureComponent<Props>{
                 <TableLink w={150} align="left"
                   onClick={() => toggleModal('trans', trans.txid)}>{trans.txid}</TableLink>
                 <FieldSpan w={100} align="left">{trans.actionCnt}</FieldSpan>
-                <FieldSpan w={100} align="left">{trans.cpuUsage}</FieldSpan>
-                <FieldSpan w={150} align="left">{trans.netUsage}</FieldSpan>
+                <FieldSpan w={100} align="left">{formatDuring(trans.cpuUsage)}</FieldSpan>
+                <FieldSpan w={150} align="left">{formatBytes(trans.netUsage)}</FieldSpan>
                 <FieldSpan w={150} align="left">{convertUtcToLocal(trans.expired)}</FieldSpan>
               </RowBox>)
             })

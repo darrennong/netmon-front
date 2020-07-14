@@ -9,6 +9,7 @@ import { uiActions } from "../../bus/ui/actions";
 import { Warpper, Title, SubTitle, HeaderBox, FieldSpan, TableBox, RowBox, TableLink } from "../styles";
 import React from "react";
 import { convertUtcToLocal } from "../../utils/dateUtils";
+import { formatBytes, formatDuring } from "../../utils/fromatNumber";
 interface Transaction{
     txid:string;
     actionCnt:number;
@@ -56,8 +57,8 @@ class Top50Transactions extends PureComponent<Props>{
                             return (<RowBox key={i}>
                                 <TableLink w={150} align="left" onClick={() => toggleModal('trans', trans.txid)}>{trans.txid}</TableLink>
                                 <FieldSpan w={100} align="left">{trans.actionCnt}</FieldSpan>
-                                <FieldSpan w={100} align="left">{trans.cpuUsage}</FieldSpan>
-                                <FieldSpan w={150} align="left">{trans.netUsage}</FieldSpan>
+                                <FieldSpan w={100} align="left">{formatDuring(trans.cpuUsage)}</FieldSpan>
+                                <FieldSpan w={150} align="left">{formatBytes(trans.netUsage)}</FieldSpan>
                                 <FieldSpan w={150} align="left">{convertUtcToLocal(trans.expired)}</FieldSpan>
                             </RowBox>)
                         })
